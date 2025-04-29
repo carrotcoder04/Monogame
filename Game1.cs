@@ -8,7 +8,7 @@ namespace Monogame
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        private Scene _gameSystem;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -19,14 +19,13 @@ namespace Monogame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            _gameSystem = new Scene(this);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
         }
 
@@ -34,18 +33,14 @@ namespace Monogame
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
-
+            _gameSystem.Update(gameTime);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
+            _gameSystem.Draw(_spriteBatch);
             base.Draw(gameTime);
         }
     }
