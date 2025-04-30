@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,91 +8,68 @@ namespace Monogame
     public class Scene
     {
         public static Scene Instance { get; private set; }
-        private Game _game;
-        private List<MonoObject> _objects = new List<MonoObject>();
-        private List<UIObject> _uiObjects = new List<UIObject>();
+        private GameManager Game => GameManager.Instance;
+        private WorldManager _worldManager;
+        private UIManager _uiManager;
         private Queue<MonoObject> _addQueue = new Queue<MonoObject>();
         private Queue<MonoObject> _destroyQueue = new Queue<MonoObject>();
         public Camera2D Camera { get; private set; }
-        public Scene(Game game, Camera2D camera = null)
+        public Scene(Camera2D camera = null)
         {
-            _game = game;
             if (camera == null)
             {
-                Camera = new Camera2D(game.GraphicsDevice.Viewport);
+                Camera = new Camera2D(Game.GraphicsDevice.Viewport);
             }
             else
             {
                 Camera = camera;
             }
             Add(Camera);
+            _worldManager = new WorldManager(this);
+            _uiManager = new UIManager(this);
             Instance = this;
             Initialize();
         }
         protected virtual void Initialize()
         {
-
         }
         private void Prepair()
         {
             while (_addQueue.Count > 0)
             {
                 var obj = _addQueue.Dequeue();
-                if (obj is UIObject uiObject)
+                if(_uiManager.IsObjectOfType(obj))
                 {
-                    _uiObjects.Add(uiObject);
+                    _uiManager.Add((UIObject)obj);
                 }
                 else
                 {
-                    _objects.Add(obj);
+                    _worldManager.Add((WorldObject)obj);
                 }
-                obj.Initialize();
             }
             while (_destroyQueue.Count > 0)
             {
                 var obj = _destroyQueue.Dequeue();
-                obj.OnDestroy();
-                if (obj is UIObject uiObject)
+                if (_uiManager.IsObjectOfType(obj))
                 {
-                    _uiObjects.Remove(uiObject);
+                    _uiManager.Remove((UIObject)obj);
                 }
                 else
                 {
-                    _objects.Remove(obj);
+                    _worldManager.Remove((WorldObject)obj);
                 }
             }
         }
         public void Update(GameTime gameTime)
         {
             Prepair();
-            foreach (var obj in _objects)
-            {
-                if (obj.IsActive)
-                {
-                    obj.Update(gameTime);
-                }
-            }
+            _worldManager.Update(gameTime);
+            _uiManager.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(transformMatrix: Camera.GetViewMatrix());
-            foreach (var obj in _objects)
-            {
-                if (obj.IsActive)
-                {
-                    obj.Draw(spriteBatch);
-                }
-            }
-            spriteBatch.End();
-            spriteBatch.Begin(transformMatrix: Matrix.Identity);
-            foreach (var obj in _uiObjects)
-            {
-                if (obj.IsActive)
-                {
-                    obj.Draw(spriteBatch);
-                }
-            }
-            spriteBatch.End();
+            _worldManager.Draw(spriteBatch);
+            _uiManager.Draw(spriteBatch);
         }
         public void Destroy(MonoObject obj)
         {
@@ -103,21 +81,15 @@ namespace Monogame
         }
         public T FindObject<T>() where T : MonoObject
         {
-            foreach (var obj in _objects)
+            if (_worldManager.IsObjectOfType<T>()) return _worldManager.FindObjectOfType<T>();
+            else
             {
-                if (obj is T tObj)
-                {
-                    return tObj;
-                }
+                return _uiManager.FindObjectOfType<T>();
             }
-            foreach (var obj in _uiObjects)
-            {
-                if (obj is T tObj)
-                {
-                    return tObj;
-                }
-            }
-            return null;
+        }
+        internal void RequestSort()
+        {
+            _uiManager.IsSortRequest = true;
         }
     }
 }

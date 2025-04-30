@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Monogame
 {
-    public class Camera2D : MonoObject
+    public class Camera2D : WorldObject
     {
         private Viewport _viewport;
         public float Zoom { get; set; } = 1.0f;

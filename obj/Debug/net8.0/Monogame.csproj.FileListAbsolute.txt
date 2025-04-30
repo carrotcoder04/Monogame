@@ -1,0 +1,13 @@
+C:\Users\ASUS\Desktop\Library\Monogame\bin\Debug\net8.0\Monogame.deps.json
+C:\Users\ASUS\Desktop\Library\Monogame\bin\Debug\net8.0\Monogame.dll
+C:\Users\ASUS\Desktop\Library\Monogame\bin\Debug\net8.0\Monogame.pdb
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\Monogame.csproj.AssemblyReference.cache
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\Monogame.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\Monogame.AssemblyInfoInputs.cache
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\Monogame.AssemblyInfo.cs
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\Monogame.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\Monogame.sourcelink.json
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\Monogame.dll
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\refint\Monogame.dll
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\Monogame.pdb
+C:\Users\ASUS\Desktop\Library\Monogame\obj\Debug\net8.0\ref\Monogame.dll

@@ -5,6 +5,7 @@ namespace Monogame
 {
     public class MonoObject
     {
+        protected GameManager GameManager => GameManager.Instance;
         protected Scene MyScene => Scene.Instance;
         public string Name { get; set; } = "MonoObject";
         public Vector2 Position { get; set; }
@@ -15,7 +16,6 @@ namespace Monogame
         protected internal virtual void Update(GameTime gameTime)
         {
         }
-
         protected internal virtual void Draw(SpriteBatch spriteBatch)
         {
         }
