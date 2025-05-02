@@ -16,12 +16,16 @@ namespace Monogame
         }
         public GameManager()
         {
-            Debug.WriteLine("Game Manager Initialize");
             Instance = this;
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Resource.SetContent(Content);
+        }
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+            Textures.Initialize(GraphicsDevice);
         }
         protected override void Initialize()
         {
@@ -30,6 +34,7 @@ namespace Monogame
         }
         protected override void Update(GameTime gameTime)
         {
+            InputManager.Update();
             Scene.Update(gameTime);
             base.Update(gameTime);
         }

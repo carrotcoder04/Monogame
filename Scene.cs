@@ -87,9 +87,5 @@ namespace Monogame
                 return _uiManager.FindObjectOfType<T>();
             }
         }
-        internal void RequestSort()
-        {
-            _uiManager.IsSortRequest = true;
-        }
     }
 }
